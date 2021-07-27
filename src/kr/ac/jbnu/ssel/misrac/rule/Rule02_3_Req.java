@@ -29,7 +29,7 @@ public class Rule02_3_Req extends AbstractMisraCRule{
 	    }
 
 	 @Override
-	    protected int visit(IASTComment comment) {
+	    public int visit(IASTComment comment) {
 
 		 String commentString =comment.toString(); 
 		if (commentString.startsWith(COMMENT_Start)&&(commentString.endsWith(COMMENT_End))) 

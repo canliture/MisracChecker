@@ -11,11 +11,11 @@ import kr.ac.jbnu.ssel.misrac.rulesupport.ViolationMessage;
 
 /**
  * MISRA-C:2004 Rule 20.06: (Required) The macro offsetof, in library <stddef.h>, shall not be used.
- * 
+ *
  * Use of this macro can lead to undefined behaviour when the types of the operands are incompatible or when bit fields are used.
- * 
- * [STATUS: TODO] "이상이 없다고 생각되는 코드인데.. 메세지가 안뜸. ASTViewer에서도 보이는 트리가 이상함."
- * 
+ *
+ * [STATUS: TODO] //
+ *
  * @author kang
  */
 
@@ -29,7 +29,7 @@ public class Rule20_6_Req extends AbstractMisraCRule {
 		super("Rule20_6_Req", false, ast);
 		shouldVisitPreprocessor = true;
 		shouldVisitExpressions = true;
-		}
+	}
 
 	public Rule20_6_Req(String ruleID, boolean visitNodes, IASTTranslationUnit ast) {
 		super(ruleID, visitNodes, ast);
@@ -47,10 +47,10 @@ public class Rule20_6_Req extends AbstractMisraCRule {
 	protected int visit(IASTFunctionCallExpression expression) {
 		if (!isSTDDEF_H_included)
 			return super.visit(expression);
-		
+
 		IASTIdExpression functionNameExp = (IASTIdExpression) expression.getFunctionNameExpression();
 		System.out.println("function name:" + functionNameExp.getName().toString());
-		
+
 		if (isSTDDEF_H_included == true && OFFSETOF.equals(functionNameExp.getName().toString())) {
 			isViolated = true;
 			String message = MessageFactory.getInstance().getMessage(5120);

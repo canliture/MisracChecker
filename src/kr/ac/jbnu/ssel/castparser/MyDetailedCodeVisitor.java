@@ -66,25 +66,25 @@ import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression;
 import org.eclipse.cdt.core.dom.ast.IASTWhileStatement;
 
 /**
- * 
+ *
  * @author "STKIM"
  */
 public class MyDetailedCodeVisitor extends DetailedASTVisitor {
-	
+
 	public MyDetailedCodeVisitor() {
 		super();
 	}
-	
+
 	public MyDetailedCodeVisitor(boolean visitNodes, IASTTranslationUnit ast) {
 		super(visitNodes,ast);
 	}
-	
-	protected int visit(IASTComment comment ) {
+
+	public int visit(IASTComment comment ) {
 		System.out.println("IASTComment:" + comment);
 		System.out.println("IASTComment:" + comment.getClass().getName());
 		return ASTVisitor.PROCESS_CONTINUE;
 	}
-	
+
 	protected int visit(IASTPreprocessorIncludeStatement statement) {
 		System.out.println("IASTPreprocessorIncludeStatement:" + statement);
 		return ASTVisitor.PROCESS_CONTINUE;
@@ -124,12 +124,12 @@ public class MyDetailedCodeVisitor extends DetailedASTVisitor {
 		System.out.println("IASTPreprocessorIfdefStatement:" + pstatement);
 		return ASTVisitor.PROCESS_CONTINUE;
 	}
-	
+
 	@Override
 	public int visit(IASTName name) {
 		System.out.println("MyDetailedCodeVisitor:IASTParameterDeclaration:" + name);
 		return super.visit(name);
-		
+
 	}
 
 	public int visit(IASTParameterDeclaration paramDeclaration) {
@@ -176,13 +176,13 @@ public class MyDetailedCodeVisitor extends DetailedASTVisitor {
 		System.out.println("MyDetailedCodeVisitor:IASTProblem:" + problem);
 		return super.visit(problem);
 	}
-	
-	
+
+
 	protected int visit(IASTFunctionDefinition functionDefinition) {
-		String functionName = functionDefinition.getDeclarator().getName().toString(); 
-		
+		String functionName = functionDefinition.getDeclarator().getName().toString();
+
 		System.out.println("IASTFunctionDefinition:" + functionDefinition  +":"+ functionName);
-		
+
 		return ASTVisitor.PROCESS_CONTINUE;
 	}
 
@@ -215,7 +215,7 @@ public class MyDetailedCodeVisitor extends DetailedASTVisitor {
 		System.out.println("IASTFunctionDeclarator:" + declarator);
 		return ASTVisitor.PROCESS_CONTINUE;
 	}
-	
+
 	protected int visit(IASTStandardFunctionDeclarator declarator) {
 		System.out.println("IASTStandardFunctionDeclarator:" + declarator);
 		return ASTVisitor.PROCESS_CONTINUE;

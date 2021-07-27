@@ -15,14 +15,14 @@ import kr.ac.jbnu.ssel.misrac.rulesupport.ViolationMessage;
 /**
  * MISRA-C:2004 Rule 14.6: (Required) For any iteration statement there shall be
  * at most one break statement used for loop termination.
- * 
+ *
  * These rules are in the interests of good structured programming. One break
  * statement is allowed in a loop since this allows, for example, for dual
  * outcome loops or for optimal coding.
- * 
- * [STATUS: TODO]: ÇöÀç, ±¸ÇöÀº loop³»¿¡ break ±¸¹®ÀÌ µÎ°³ ÀÌ»ó ÀÖ´ÂÁö È®ÀÎÇÏ´Â ÄÚµå·Î ±¸ÇöµÊ,
- * ±×·±µ¥, rule¼³¸íÀº loop³»ÀÇ ¿©·¯ statement¿¡ ÀÖ´Â °Í±îÁö È®ÀÎÇÏ¶ó°í ÇÏ´Â°Í °°À½. 
- * 
+ *
+ * [STATUS: TODO]:
+ * ï¿½×·ï¿½ï¿½ï¿½, ruleï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ loopï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ statementï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Í±ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï¶ï¿½ï¿½ ï¿½Ï´Â°ï¿½ ï¿½ï¿½ï¿½ï¿½. 
+ *
  * @author stkim
  *
  */
@@ -38,7 +38,7 @@ public class Rule14_6_Req extends AbstractMisraCRule {
 	 * the zero or only one break statement should be existed. 
 	 */
 	protected int visit(IASTCompoundStatement statement) {
-		
+
 		IASTNode parent = statement.getParent();
 		// only apply this rule into loop.
 		if(!(parent instanceof IASTForStatement || parent instanceof IASTWhileStatement ||
@@ -46,14 +46,14 @@ public class Rule14_6_Req extends AbstractMisraCRule {
 		{
 			return super.visit(statement);
 		}
-		
+
 		IASTNode[] internalStatements = statement.getChildren();
-			
-			
+
+
 		boolean breakStmtUsed = false;
 		boolean violated = false;
-		
-		for (IASTNode iastNode : internalStatements) 
+
+		for (IASTNode iastNode : internalStatements)
 		{
 //			if( CASTUtil.containsASTNode(iastNode, IASTBreakStatement.class))
 //			{
@@ -66,12 +66,12 @@ public class Rule14_6_Req extends AbstractMisraCRule {
 //					violated = true;
 //				}
 //			}
-			
+
 			if( iastNode instanceof IASTBreakStatement)
 			{
 				if( ! breakStmtUsed)		// if the breakstatement is used first, then save it first.
 				{
-					breakStmtUsed = true; 	
+					breakStmtUsed = true;
 				}
 				else						// if the breakstatement is used before. 	
 				{
@@ -79,15 +79,15 @@ public class Rule14_6_Req extends AbstractMisraCRule {
 				}
 			}
 		}
-		
+
 		if( violated )
 		{
 			String msg = MessageFactory.getInstance().getMessage(0771);
 			violationMsgs.add(new ViolationMessage(this, getRuleID() + ":" + msg, statement));
 			isViolated = true;
 		}
-		
+
 		return super.visit(statement);
 	}
-	
+
 }

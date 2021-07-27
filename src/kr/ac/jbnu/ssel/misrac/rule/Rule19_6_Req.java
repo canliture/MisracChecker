@@ -8,7 +8,7 @@ import kr.ac.jbnu.ssel.misrac.rulesupport.ViolationMessage;
 
 /**
  * #undef shall not be used.
- * 
+ *
  * #undef should not normally be needed. Its use can lead to confusion with
  * respect to the existence or meaning of a macro when it is used in the code.
  * Example Code:
@@ -17,13 +17,13 @@ import kr.ac.jbnu.ssel.misrac.rulesupport.ViolationMessage;
  * #include "misra.h" #include "m2cmex.h"
  *
  * #define L 0 #undef L
- * 
+ *
  * extern S16 test_1906( void ) { return 1; }
  *
  *
- * 
- * [STATUS: not statically checkable, parcially support] "메세지는 정상으로 띄워지나, 포커싱 문제를 해결해야한다." 
- * 
+ *
+ * [STATUS: not statically checkable, parcially support] //
+ *
  * @author sangjin
  *
  */

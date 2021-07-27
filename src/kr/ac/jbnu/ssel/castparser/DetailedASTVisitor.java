@@ -82,7 +82,7 @@ import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression;
 import org.eclipse.cdt.core.dom.ast.IASTWhileStatement;
 
 /**
- * 
+ *
  * @author "STKIM"
  *
  */
@@ -141,7 +141,7 @@ public class DetailedASTVisitor extends ASTVisitor {
 
 	////////////////////////////////////////////////////////////////////////////////////////////
 	// Methods for Comments
-	protected int visit(IASTComment comment) {
+	public int visit(IASTComment comment) {
 		return ASTVisitor.PROCESS_CONTINUE;
 	}
 
@@ -378,7 +378,7 @@ public class DetailedASTVisitor extends ASTVisitor {
 	protected int visit(IASTFunctionDeclarator declarator) {
 		return ASTVisitor.PROCESS_CONTINUE;
 	}
-	
+
 	protected int visit(IASTStandardFunctionDeclarator declarator) {
 		return ASTVisitor.PROCESS_CONTINUE;
 	}

@@ -10,17 +10,17 @@ import kr.ac.jbnu.ssel.misrac.rulesupport.ViolationMessage;
 /**
  * Non-standard characters should not occur in header file names in #include
  * directives.
- * 
+ *
  * If the ', \, ", or /* characters are used between < and > delimiters or the
  * ', \, or /* characters are used between the " delimiters in a header name
  * preprocessing token, then the behaviour is undefined. Use of the \ character
  * is permitted in filename paths without the need for a deviation if required
  * by the host operating system of the development environment.
- * 
- * 
- * [STATUS: not statically checkable, parcially support] "이거 문자별로 메세지를 구분시켜야 됩니다. 얼마 안걸릴듯."
- * 
- * 
+ *
+ *
+ * [STATUS: not statically checkable, parcially support]
+ *
+ *
  * @author sangjin
  *
  */
@@ -30,7 +30,7 @@ public class Rule19_2_Adv extends AbstractMisraCRule {
 	private static final String Non_Standard3 = "'";
 	private static final String Non_Standard4 = "\\";
 	private static final String[] Non_Standard = {Non_Standard1,Non_Standard2,Non_Standard3,Non_Standard4};
-	
+
 
 	public Rule19_2_Adv(IASTTranslationUnit ast) {
 		super("Rule19_2_Adv", false, ast);
@@ -39,15 +39,15 @@ public class Rule19_2_Adv extends AbstractMisraCRule {
 
 	@Override
 	protected int visit(IASTPreprocessorIncludeStatement includeStatement) {
-		
+
 		String[] parseString = includeStatement.getRawSignature().split(" ");
 		String target = parseString[1];
-				
+
 		for(int i=0; i<Non_Standard.length; i++){
 			if(target.contains(Non_Standard[i])){
-				
+
 				System.out.println("Non_Standard :: "+Non_Standard[i]);
-				
+
 				//[U] Using any of the characters ' " or /* in '#include <%s>' gives undefined behaviour.
 				String message1 = MessageFactory.getInstance().getMessage(813);
 				violationMsgs.add(new ViolationMessage(this, getRuleID() + ":" + message1 + "--" + target,

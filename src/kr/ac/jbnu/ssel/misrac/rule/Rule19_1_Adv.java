@@ -9,15 +9,15 @@ import kr.ac.jbnu.ssel.misrac.rulesupport.ViolationMessage;
 /**
  * #include statements in a file should only be preceded by other preprocessor
  * directives or comments.
- * 
+ *
  * All the #include statements in a particular code file should be grouped
  * together near the head of the file. The rule states that the only items which
  * may precede a #include in a file are other preprocessor directives or
  * comments.
- * 
- * 
+ *
+ *
  * [STATUS: not statically checkable, parcially support]
- * 
+ *
  * @author sangjin
  *
  */
@@ -27,7 +27,7 @@ public class Rule19_1_Adv extends AbstractMisraCRule {
 		super("Rule19_1_Adv", false, ast);
 		shouldVisitPreprocessor = true;
 		shouldVisitStatements = true;
-		shouldVisitTranslationUnit = true;// 코드 전체를 불러와서 파싱 중
+		shouldVisitTranslationUnit = true;//
 	}
 
 	@Override

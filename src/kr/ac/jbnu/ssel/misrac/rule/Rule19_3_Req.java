@@ -14,12 +14,12 @@ import kr.ac.jbnu.ssel.misrac.rulesupport.ViolationMessage;
 /**
  * The #include directive shall be followed by either a <filename> or "filename"
  * sequence.
- * 
+ *
  * For example, the following are allowed.
- * 
- * 
- * [STATUS: not statically checkable, parcially support] "define으로 filename이 정해진 경우 또한 검증해야한다. "
- * 
+ *
+ *
+ * [STATUS: not statically checkable, parcially support]
+ *
  * @author sangjin
  *
  */
@@ -38,8 +38,8 @@ public class Rule19_3_Req extends AbstractMisraCRule {
 		if ((includString[1].startsWith("\"") && includString[1].endsWith("\""))
 				|| (includString[1].startsWith("<") && includString[1].endsWith(">"))) {
 		}
-		
-		
+
+
 		else {
 			// [U] The '#include' preprocessing directive has not been followed by <h-char-sequence> or "s-char-sequence".
 			String message1 = MessageFactory.getInstance().getMessage(809);

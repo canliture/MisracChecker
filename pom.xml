@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>kr.ac.jbnu.ssel.misrac</groupId>
 	<artifactId>kr.ac.jbnu.ssel.misrac</artifactId>
@@ -48,6 +48,25 @@
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
 			<version>1.10.3</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.github.mhoffrog.attached/org.eclipse.cdt.core -->
+		<dependency>
+			<groupId>com.github.mhoffrog.attached</groupId>
+			<artifactId>org.eclipse.cdt.core</artifactId>
+			<version>5.11.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.eclipse.core/org.eclipse.core.runtime -->
+		<dependency>
+			<groupId>org.eclipse.core</groupId>
+			<artifactId>org.eclipse.core.runtime</artifactId>
+			<version>3.7.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.reflections</groupId>
+			<artifactId>reflections</artifactId>
+			<version>0.9.12</version>
 		</dependency>
 	</dependencies>
 </project>

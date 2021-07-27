@@ -21,28 +21,28 @@ import kr.ac.jbnu.ssel.misrac.rulesupport.ViolationMessage;
  * MISRA-C:2004  Rule  8.1:  (Required)	
  * Functions shall have prototype declarations and the prototype shall 
  * be visible at both the function definition and call.
- * 
+ *
  * The use of prototypes enables the compiler to check the integrity of function definitions and calls. 
  * Without prototypes the compiler is not obliged to pick up certain errors in function calls 
  * (e.g. different number of arguments from the function body, mismatch in types of arguments 
  * between call and definition). Function interfaces have been shown to be a cause of considerable problems, 
  * and therefore this rule is considered very important.
- * 
+ *
  * The recommended method of implementing function prototypes for external functions is to declare the function 
  * (i.e. give the function prototype) in a header file, and then include the header file in all those code 
  * files that need the prototype (see Rule ).
- * 
+ *
  * The provision of a prototype for a function with internal linkage is a good programming practice.
- * 
- * TODO-1: functionDeclarations¿¡ '#include'¾È¿¡ ÀÖ´Â ÇÔ¼ö Á¤ÀÇµµ °¡Á®¿Í¼­ ÀÌ ³»¿ëÀ» ´ã¾Æ¾ßÇÔ.  
- * TODO-2: CallFunctionÇÒ¶§, ÇÔ¼ö¸¸ °¡Áö°í ¾î¶² ÇÔ¼ö¸¦ È£ÃâÇÏ´ÂÁö ¾Ë¾Æ³»¾ßÇÔ. ÀÌ°Ô °¡´ÉÇÑ°¡?
- * 
+ *
+ * TODO-1: functionDeclarations
+ * TODO-2: CallFunction
+ *
  * @author stkim
  *
  */
 public class Rule08_1_Req extends AbstractMisraCRule {
 	private static HashSet<IASTSimpleDeclaration> prototypes = new HashSet<IASTSimpleDeclaration>();
-	
+
 	public Rule08_1_Req(IASTTranslationUnit ast) {
 		super("Rule08_1_Req", false, ast);
 		shouldVisitDeclarations = true;
@@ -56,9 +56,9 @@ public class Rule08_1_Req extends AbstractMisraCRule {
 	 */
 	@Override
 	protected int visit(IASTSimpleDeclaration simpleDeclaration) {
-		
+
 		IASTDeclarator[] declarators = simpleDeclaration.getDeclarators();
-		
+
 		boolean isProtoFuncDeclaration = false;
 		for (IASTDeclarator declarator: declarators) {
 			if( declarator instanceof IASTFunctionDeclarator)
@@ -66,7 +66,7 @@ public class Rule08_1_Req extends AbstractMisraCRule {
 				isProtoFuncDeclaration = true;
 			}
 		}
-		
+
 		if(isProtoFuncDeclaration)
 		{
 			prototypes.add(simpleDeclaration);
@@ -74,22 +74,22 @@ public class Rule08_1_Req extends AbstractMisraCRule {
 
 		return super.visit(simpleDeclaration);
 	}
-	
+
 	/**
-	 * Rule: function¼±¾ðºÎ°¡ prototypeÀ¸·Î ¼±¾ðµÇ¾îÀÖ¾î¾ßÇÔ. Áï, declspecifier¿Í declaratorÀÇ ³»¿ëÀÌ µ¿ÀÏÇØ¾ßÇÔ. 
-	 * 			declspecifier´Â ¿ÏÀü µ¿ÀÏÇØ¾ßÇÏ°í, declaratorºÎºÐÀº ÆÄ¶ó¹ÌÅÍÀÇ ÀÌ¸§Àº Á¦¿ÜÇÏ°í ´Ù¸¥°ÍÀº µ¿ÀÏÇØ¾ßÇÔ.  
-	 * 
+	 * Rule: functionï¿½ï¿½ï¿½ï¿½Î°ï¿½ prototypeï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½, declspecifierï¿½ï¿½ declaratorï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½ï¿½. 
+	 * 			declspecifierï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½Ï°ï¿½, declaratorï¿½Îºï¿½ï¿½ï¿½ ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ù¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½ï¿½.  
+	 *
 	 */
 	@Override
 	protected int visit(IASTFunctionDefinition functionDefinition) {
-		
+
 		IASTDeclSpecifier specifier = functionDefinition.getDeclSpecifier();
 		IASTFunctionDeclarator funcDeclarator = functionDefinition.getDeclarator();
-		
+
 		if( !checkConformanceOfPrototype(functionDefinition))
 		{
 			String functionName = funcDeclarator.getName().toString();
-			
+
 			// "Defining '%s()' with an identifier list and separate parameter declarations is an obsolescent feature."
 			String msg = MessageFactory.getInstance().getMessage(3002);
 			String msgWithFuncName = String.format(msg, functionName);
@@ -105,19 +105,19 @@ public class Rule08_1_Req extends AbstractMisraCRule {
 
 			isViolated = true;
 		}
-		
+
 		return super.visit(functionDefinition);
 	}
-	
+
 	/**
-	 * function definition°ú prototypeÀÌ µ¿ÀÏÇÑÁö ÆÇ´Ü
-	 * 
+	 * function definitionï¿½ï¿½ prototypeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½
+	 *
 	 * @param functionDefinition
 	 * @return
 	 */
 	private boolean checkConformanceOfPrototype(IASTFunctionDefinition functionDefinition) {
-		
-		for (IASTSimpleDeclaration prototypeFunc : prototypes) 
+
+		for (IASTSimpleDeclaration prototypeFunc : prototypes)
 		{
 			// return true(consider 'conform'), if the function conform with one of the prototype functions. 
 			if( checkConformanceOfPrototypeFunction(functionDefinition, prototypeFunc))
@@ -129,13 +129,13 @@ public class Rule08_1_Req extends AbstractMisraCRule {
 	}
 
 	private boolean checkConformanceOfPrototypeFunction(IASTFunctionDefinition functionDefinition,
-			IASTSimpleDeclaration prototypeFunc) {
-		
+														IASTSimpleDeclaration prototypeFunc) {
+
 		// get return type, parameters and function name of the given function.
 		IASTDeclSpecifier specifier = functionDefinition.getDeclSpecifier();
 		IASTFunctionDeclarator funcDeclarator = functionDefinition.getDeclarator();
 		ArrayList<IASTParameterDeclaration> params = new ArrayList<IASTParameterDeclaration>();
-		
+
 		IASTNode[] children = funcDeclarator.getChildren();
 		for (IASTNode iastNode : children) {
 			if( iastNode instanceof IASTParameterDeclaration)
@@ -143,26 +143,26 @@ public class Rule08_1_Req extends AbstractMisraCRule {
 				params.add((IASTParameterDeclaration)iastNode);
 			}
 		}
-		
+
 		String functionName = funcDeclarator.getName().toString();
-		
+
 		///////////////////////////////
 		boolean isConform = false;
 		IASTDeclSpecifier protoSpecifier = prototypeFunc.getDeclSpecifier();
 		IASTDeclarator[] prototypeDeclarators = prototypeFunc.getDeclarators();
-		for (IASTDeclarator iastDeclarator : prototypeDeclarators) 
+		for (IASTDeclarator iastDeclarator : prototypeDeclarators)
 		{
 			if( iastDeclarator instanceof IASTFunctionDeclarator)
 			{
 				boolean sameFuncName = false, notSameParamType = false, sameReturnType = false;
-				
+
 				// 1. check if the function name is same.
 				IASTFunctionDeclarator protoFunctionDecl = (IASTFunctionDeclarator)iastDeclarator;
-				if( functionName.equals(protoFunctionDecl.getName().toString()))	 
+				if( functionName.equals(protoFunctionDecl.getName().toString()))
 				{
 					sameFuncName = true;
 				}
-				
+
 				// 2. check if the parameter type is same. 
 				ArrayList<IASTParameterDeclaration> protoParams = getParams( protoFunctionDecl.getChildren());
 				if( protoParams.size() == params.size())
@@ -171,16 +171,16 @@ public class Rule08_1_Req extends AbstractMisraCRule {
 					{
 						IASTParameterDeclaration param = protoParams.get(i);
 						String prototypeParamType = param.getDeclSpecifier().getRawSignature();
-						
+
 						IASTParameterDeclaration protoParam = params.get(i);
 						String paramType = protoParam.getDeclSpecifier().getRawSignature();
-							
+
 						if(!prototypeParamType.equals(paramType))
 						{
 							notSameParamType = true;	// if one of the param type is different, notSameParamType is false.
 							break;
 						}
-					}	
+					}
 				}
 
 				// 3. check if the return type is the same.
@@ -190,7 +190,7 @@ public class Rule08_1_Req extends AbstractMisraCRule {
 				{
 					sameReturnType = true;
 				}
-				
+
 				// if aforementioned three are the same, we consider it conforms. 
 				if( sameFuncName && !notSameParamType && sameReturnType)
 				{
@@ -203,7 +203,7 @@ public class Rule08_1_Req extends AbstractMisraCRule {
 
 	/**
 	 * extract only parameters
-	 * 
+	 *
 	 * @param children
 	 * @return
 	 */
@@ -223,7 +223,7 @@ public class Rule08_1_Req extends AbstractMisraCRule {
 		{
 			return false;
 		}
-		
+
 		for(int i= 0; i < protoReturns.length ; i++)
 		{
 			if( !protoReturns[i].equals(returns[i]))
@@ -235,8 +235,8 @@ public class Rule08_1_Req extends AbstractMisraCRule {
 	}
 
 	/**
-	 * Rule: functionÈ£ÃâºÎºÐÀÌ prototypeÀ¸·Î ¼±¾ðµÇ¾î ÀÖ¾î¾ßÇÔ.
-	 * TODO: ÀÌ°Í ÀÌ½´ÀÓ
+	 * Rule: functionÈ£ï¿½ï¿½Îºï¿½ï¿½ï¿½ prototypeï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½.
+	 * TODO: ï¿½Ì°ï¿½ ï¿½Ì½ï¿½ï¿½ï¿½
 	 */
 	@Override
 	protected int visit(IASTFunctionCallExpression expression) {

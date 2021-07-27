@@ -20,13 +20,12 @@ import kr.ac.jbnu.ssel.misrac.rulesupport.ViolationMessage;
  * MISRA-C:2004 Rule 8.3: (Required) For each function parameter the type given
  * in the declaration and definition shall be identical, and the return types
  * shall also be identical.
- * 
+ *
  * The types of the parameters and return values in the prototype and the
  * definition must match. This requires identical types including typedef names
  * and qualifiers, and not just identical base types.
- * 
- * �̰� ������ Rule8.1�� ������ �� �ۿ� ����. �̰��� ���� �Ϸ�� Rule8.1�� ���� ��������
- * 
+ *
+ *
  * @author stkim
  *
  */
@@ -83,7 +82,7 @@ public class Rule08_3_Req extends AbstractMisraCRule
 			String msg = MessageFactory.getInstance().getMessage(0624);
 			String msgWithFuncName = String.format(msg, functionName);
 			violationMsgs.add(new ViolationMessage(this, getRuleID() + ":" + msgWithFuncName, functionDefinition));
-			
+
 			// Type or number of arguments doesn't match previous use of the function.
 			String msg2 = MessageFactory.getInstance().getMessage(1331);
 			violationMsgs.add(new ViolationMessage(this, getRuleID() + ":" + msg2, functionDefinition));
@@ -91,21 +90,21 @@ public class Rule08_3_Req extends AbstractMisraCRule
 			// Type or number of arguments doesn't match prototype found later.
 			String msg3 = MessageFactory.getInstance().getMessage(1332);
 			violationMsgs.add(new ViolationMessage(this, getRuleID() + ":" + msg3, functionDefinition));
-	
+
 			// Type or number of arguments doesn't match function definition found later.
 			String msg4 = MessageFactory.getInstance().getMessage(1333);
 			violationMsgs.add(new ViolationMessage(this, getRuleID() + ":" + msg4, functionDefinition));
-			
+
 			// Type of argument no. %s differs from its type in definition of function.
 			String msg5 = MessageFactory.getInstance().getMessage(3320);
 			ArrayList<IASTParameterDeclaration> protoParams = getParams(funcDeclarator.getChildren());
 			String msgWithNumOfParams = String.format(msg5, ""+ protoParams.size());
 			violationMsgs.add(new ViolationMessage(this, getRuleID() + ":" + msgWithNumOfParams, functionDefinition));
-				
+
 			// Function parameter declared with type qualification which differs from previous declaration.	
 			String msg6 = MessageFactory.getInstance().getMessage(3675);
 			violationMsgs.add(new ViolationMessage(this, getRuleID() + ":" + msg6, functionDefinition));
-			
+
 			isViolated = true;
 		}
 
@@ -114,7 +113,7 @@ public class Rule08_3_Req extends AbstractMisraCRule
 
 	/**
 	 * function definition�� prototype�� �������� �Ǵ�
-	 * 
+	 *
 	 * @param functionDefinition
 	 * @return
 	 */
@@ -134,7 +133,7 @@ public class Rule08_3_Req extends AbstractMisraCRule
 	}
 
 	private boolean checkConformanceOfPrototypeFunction(IASTFunctionDefinition functionDefinition,
-			IASTSimpleDeclaration prototypeFunc)
+														IASTSimpleDeclaration prototypeFunc)
 	{
 
 		// get return type, parameters and function name of the given function.
@@ -185,9 +184,9 @@ public class Rule08_3_Req extends AbstractMisraCRule
 						if (!prototypeParamType.equals(paramType))
 						{
 							notSameParamType = true; // if one of the param type
-														// is different,
-														// notSameParamType is
-														// false.
+							// is different,
+							// notSameParamType is
+							// false.
 							break;
 						}
 					}
@@ -214,7 +213,7 @@ public class Rule08_3_Req extends AbstractMisraCRule
 
 	/**
 	 * extract only parameters
-	 * 
+	 *
 	 * @param children
 	 * @return
 	 */

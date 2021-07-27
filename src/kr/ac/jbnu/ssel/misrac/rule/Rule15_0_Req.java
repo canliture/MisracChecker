@@ -15,48 +15,48 @@ import kr.ac.jbnu.ssel.misrac.rulesupport.ViolationMessage;
 
 /**
  * The MISRA C switch syntax shall be used.
- * 
+ *
  * The syntax for the switch in C is weak, allowing complex, unstructured
  * behaviour. The following text describes the syntax for switch statements as
  * defined by MISRA-C and is normative. This, and the associated rules, enforces
  * a simple and consistent structure on the switch statement. The following
  * syntax rules are additional to the C standard syntax rules. All syntax rules
  * not defined below are as defined in the C standard.
- * 
+ *
  * switch-statement:
- * 
+ *
  * switch ( expression ) { case-label-clause-list default-label-clause }
  * case-label-clause-list:
- * 
+ *
  * case-label case-clauseopt case-label-clause-list case-label case-clauseopt
  * case-label:
- * 
+ *
  * case constant-expression : case-clause:
- * 
+ *
  * statement-listopt break ; { declaration-listopt statement-listopt break ; }
  * default-label-clause:
- * 
+ *
  * default-label default-clause default-label:
- * 
+ *
  * default : default-clause:
- * 
+ *
  * case-clause and
- * 
+ *
  * statement:
- * 
- * 
+ *
+ *
  * compound_statement expression_statement selection_statement
  * iteration_statement
- * 
+ *
  * The following terms are also used within the text of the rules:
- * 
+ *
  * switch label Either a case label or default label. case clause The code
  * between any two switch labels. default clause The code between the default
  * label and the end of the switch statement. switch clause Either a case clause
  * or a default clause.
- * 
+ *
  * [STATUS: DONE]
- * 
+ *
  * @author sangjin
  *
  */
@@ -69,7 +69,7 @@ public class Rule15_0_Req extends AbstractMisraCRule {
 	//All of elements in switch statement must be in case or default
 	//default statement in switch statement must be last position of switch statement
 	//case statement has break at the last
-	
+
 	@Override
 	protected int visit(IASTSwitchStatement statement) {
 
@@ -87,7 +87,6 @@ public class Rule15_0_Req extends AbstractMisraCRule {
 				isContainDefaultStatement = true;
 				list.add(switchElement);
 			} else {
-				// ¸ðµç ¿ä¼Ò´Â case È¤Àº default ±¸¹® ¾È¿¡ ÀÖ¾î¾ßÇÑ´Ù.
 				if(!isContainCaseStatement){
 					String message1 = MessageFactory.getInstance().getMessage(3234);
 					violationMsgs.add(new ViolationMessage(this,
@@ -101,7 +100,7 @@ public class Rule15_0_Req extends AbstractMisraCRule {
 		if (isContainDefaultStatement) {
 			IASTNode lastElement = list.get(list.size() - 1);
 			IASTNode beforeLastElement = list.get(list.size() - 2);
-			// µðÆúÆ®´Â ¸¶Áö¸·¿¡ ÀÖ¾î¾ßÇÑ´Ù.
+			// ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½Ñ´ï¿½.
 			if (!(lastElement instanceof IASTDefaultStatement) && !(lastElement instanceof IASTBreakStatement)) {
 				String message1 = MessageFactory.getInstance().getMessage(3234);
 				violationMsgs.add(new ViolationMessage(this,
@@ -117,7 +116,7 @@ public class Rule15_0_Req extends AbstractMisraCRule {
 			}
 		}
 
-		//case ±¸¹®Àº break¸¦ °®´Â´Ù.
+		//case ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ breakï¿½ï¿½ ï¿½ï¿½ï¿½Â´ï¿½.
 		for (int i = 0; i < list.size(); i++) {
 			IASTNode node = list.get(i);
 			if (node instanceof IASTCaseStatement) {
@@ -130,7 +129,7 @@ public class Rule15_0_Req extends AbstractMisraCRule {
 			}
 		}
 
-		// switch ±¸¹®¿¡ case³ª break, default°¡ ÇÏ³ªµµ ¾øÀ¸¸é À§¹Ý
+		// switch ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ caseï¿½ï¿½ break, defaultï¿½ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		if (list.isEmpty()) {
 			String message1 = MessageFactory.getInstance().getMessage(3234);
 			violationMsgs.add(new ViolationMessage(this,

@@ -37,7 +37,7 @@ public class Rule02_2_Req extends AbstractMisraCRule {
 	}
 
 	@Override
-	protected int visit(IASTComment comment) {
+	public int visit(IASTComment comment) {
 
 		if (comment.toString().startsWith(CPP_STYLE_COMMENT_PREFIX)) {
 
