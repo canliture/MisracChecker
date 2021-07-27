@@ -21,3 +21,12 @@ hs_err_pid*
 # End of https://www.gitignore.io/api/java
 /bin/
 /target/
+.idea
+.settings
+icons
+META-INF
+Resource
+target
+out
+.*
+*.iml
