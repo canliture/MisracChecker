@@ -26,7 +26,7 @@ public class MISRACChecker {
 
     private static final String HELP = "\n"
                                      + "-src {被扫描源码目录} \n"
-                                     + "-rst {输出结果文件路径}, 可选\n";
+                                     + "-rst {输出结果文件路径}\n";
 
     private static final String RESULT_NAME_PREFIX = "misra_c_result";
 
@@ -86,13 +86,8 @@ public class MISRACChecker {
         }
         try {
             srcPath = new File(srcPath).getCanonicalPath();
-            if (resultPath != null) {
-                resultPath = new File(resultPath).getCanonicalPath();
-            } else {
-                Random r = new Random(System.currentTimeMillis());
-                String randomStr = System.currentTimeMillis() + ("_" + r.nextDouble()).replaceAll("0\\.", "");
-                String resultName = RESULT_NAME_PREFIX + "_" + randomStr + ".xml";
-                resultPath = new File(srcPath, resultName).getCanonicalPath();
+            if (resultPath == null) {
+                resultPath = srcPath;
             }
         } catch (IOException e) {
             log.error(e.getMessage());

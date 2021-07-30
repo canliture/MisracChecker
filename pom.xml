@@ -21,6 +21,7 @@
 						<addMavenDescriptor>false</addMavenDescriptor>
 						<manifest>
 							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
 							<useUniqueVersions>false</useUniqueVersions>
 							<mainClass>kr.ac.jbnu.ssel.misrac.MISRACChecker</mainClass>
 						</manifest>
@@ -41,7 +42,7 @@
 							<excludeTransitive>false</excludeTransitive>
 							<stripVersion>false</stripVersion>
 							<excludeArtifactIds>junit,hamcrest-core</excludeArtifactIds>
-							<outputDirectory>${project.build.directory}</outputDirectory>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
