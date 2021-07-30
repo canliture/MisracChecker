@@ -31,5 +31,7 @@ out
 log
 .*
 *.iml
-*/**/ReportWriter.java
-*/**/MISRA-C-Mapping.xlsx
+src/main/java/kr/ac/jbnu/ssel/misrac/ReportWriter.java
+src/main/java/kr/ac/jbnu/ssel/misrac/RuleMapper.java
+src/main/resources/MISRA-C-Mapping.xlsx
+git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch src/main/java/kr/ac/jbnu/ssel/misrac/ReportWriter.java' --prune-empty --tag-name-filter cat -- --all
