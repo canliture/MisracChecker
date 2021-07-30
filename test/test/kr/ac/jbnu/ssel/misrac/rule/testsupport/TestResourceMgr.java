@@ -6,6 +6,8 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.util.*;
 
+import kr.ac.jbnu.ssel.misrac.ui.preference.MisraUIdataHandler;
+import kr.ac.jbnu.ssel.misrac.ui.preference.Rule;
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
 import org.eclipse.cdt.core.dom.ast.gnu.cpp.GPPLanguage;
 import org.eclipse.cdt.core.index.IIndex;
@@ -75,6 +77,15 @@ public class TestResourceMgr
 			{
 				ViolationMessage[] violationMsgs = checker.getViolationMessages();
 				violationMessages.addAll(Arrays.asList(violationMsgs));
+			}
+		}
+
+		MisraUIdataHandler handler = MisraUIdataHandler.getInstance();
+		List<Rule> rules = handler.getRules();
+
+		for (Rule rule : rules) {
+			if (rule.getClassName().contains("(not")) {
+				System.out.println(rule.getClassName());
 			}
 		}
 

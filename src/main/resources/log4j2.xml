@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Properties>
+        <Property name="LOG_HOME">log</Property>
+        <Property name="LOG_FILE">info.log</Property>
+    </Properties>
+    <Appenders>
+        <!-- 默认打印到控制台 -->
+        <Console name="console_appender" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %p  %m%n"/>
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Console>
+
+        <!-- 日常info输出-->
+        <RollingFile  name="file_appender" fileName="${LOG_HOME}/${LOG_FILE}"
+                      filePattern="${LOG_HOME}/%d{yyyy-MM-dd}_${LOG_FILE}" immediateFlush="true">
+            <PatternLayout>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %p [%t] %C.%M(%L) | %m%n</pattern>
+            </PatternLayout>
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1" />
+                <SizeBasedTriggeringPolicy size="10240KB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="30"/>
+        </RollingFile >
+        <RollingFile name="ErrorFile" fileName="${LOG_HOME}/error.log" filePattern="${LOG_HOME}/error_%d{yyyy-MM-dd}.log" append="true">
+            <PatternLayout charset="UTF-8" pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %p [%t] %C.%M(%L) | %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="10240KB"/>
+            </Policies>
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            <DefaultRolloverStrategy max="30"/>
+        </RollingFile>
+
+        <RollingFile name="DebugFile" fileName="${LOG_HOME}/debug.log" filePattern="${LOG_HOME}/debug_%d{yyyy-MM-dd}.log" append="true">
+            <PatternLayout charset="UTF-8" pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %p [%t] %C.%M(%L) | %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="10240KB"/>
+            </Policies>
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <DefaultRolloverStrategy max="30"/>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <!-- 默认打印日志级别为 error -->
+        <Root level="all">
+            <AppenderRef ref="console_appender"/>
+            <AppenderRef ref="file_appender"/>
+            <AppenderRef  ref="DebugFile"/>
+            <AppenderRef  ref="ErrorFile"/>
+        </Root>
+    </Loggers>
+</Configuration>

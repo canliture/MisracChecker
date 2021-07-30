@@ -64,7 +64,6 @@ public class GeneratingRuleintoXML {
 			rule.setShouldCheck(false);
 			rule.setSourceCode(sourceCode);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -177,6 +176,5 @@ public class GeneratingRuleintoXML {
 	public static void main(String[] args) throws IOException, URISyntaxException, JAXBException {
 		GeneratingRuleintoXML generatingRuleintoXML = new GeneratingRuleintoXML();
 		generatingRuleintoXML.generateRuletoXML();
-		
 	}
 }
