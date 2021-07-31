@@ -78,14 +78,14 @@ public class MISRACChecker {
         checker.calStatics();
         checker.parse();
 
-        List<ViolationMessage> msgList = new ArrayList<>();
+        Set<ViolationMessage> msgSet = new HashSet<>();
         List<IASTTranslationUnit> trans = checker.astList;
         for (IASTTranslationUnit unit : trans) {
-            msgList.addAll(checker.checkTranslation(unit));
+            msgSet.addAll(checker.checkTranslation(unit));
         }
 
         // internal implementation, not open source.
-        ReportWriter writer = new ReportWriter(checker, msgList);
+        ReportWriter writer = new ReportWriter(checker, new ArrayList<>(msgSet));
         writer.report();
     }
 
@@ -134,7 +134,7 @@ public class MISRACChecker {
         }
     }
 
-    private List<ViolationMessage> checkTranslation(IASTTranslationUnit unit) {
+    private Set<ViolationMessage> checkTranslation(IASTTranslationUnit unit) {
         checkers = new ArrayList<>();
         String prefix = "kr.ac.jbnu.ssel.misrac.rule.";
         Reflections f = new Reflections(prefix);
@@ -169,19 +169,19 @@ public class MISRACChecker {
             checkers.add(checker);
         }
 
-        List<ViolationMessage> msgList = new ArrayList<>();
+        Set<ViolationMessage> msgSet = new HashSet<>();
         for (AbstractMisraCRule checker : checkers) {
             try {
                 checker.checkRule();
                 if (checker.isViolated()) {
                     ViolationMessage[] msgs = checker.getViolationMessages();
-                    msgList.addAll(Arrays.asList(msgs));
+                    msgSet.addAll(Arrays.asList(msgs));
                 }
             } catch (MiaraCRuleException e) {
                 e.printStackTrace();
             }
         }
 
-        return msgList;
+        return msgSet;
     }
 }

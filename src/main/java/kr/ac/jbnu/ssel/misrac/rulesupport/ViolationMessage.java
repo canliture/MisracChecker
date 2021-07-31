@@ -2,6 +2,8 @@ package kr.ac.jbnu.ssel.misrac.rulesupport;
 
 import org.eclipse.cdt.core.dom.ast.IASTNode;
 
+import java.util.Objects;
+
 /**
  * @author "STKIM"
  */
@@ -60,5 +62,18 @@ public class ViolationMessage {
 	@Override
 	public String toString() {
 		return rule.getRuleID() + " - violation - " + message + ", node:" + node.toString();
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(rule, node, cFilePath);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		ViolationMessage that = (ViolationMessage) o;
+		return Objects.equals(rule, that.rule) && Objects.equals(node, that.node) && Objects.equals(cFilePath, that.cFilePath);
 	}
 }
