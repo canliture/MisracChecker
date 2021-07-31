@@ -46,6 +46,9 @@ public class CDTParser {
             int line = fileLocation.getStartingLineNumber();
             int lineEnd = fileLocation.getEndingLineNumber();
             int column = getColumn(arrays,line, fileLocation.getNodeOffset())-1;
+            if (column < 0) {
+                column = 0;
+            }
             int columnEnd = getColumn(arrays,lineEnd, fileLocation.getNodeOffset()+ fileLocation.getNodeLength())-1;
             return new Pair<>(new Pair<>(line, lineEnd), new Pair<>(column, columnEnd));
         } catch (NoSuchFieldException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {

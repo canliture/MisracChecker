@@ -2,8 +2,7 @@ package kr.ac.jbnu.ssel.misrac.util;
 
 import lombok.extern.log4j.Log4j2;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Set;
 
 /**
@@ -35,5 +34,17 @@ public class Files {
                 }
             }
         }
+    }
+
+    public static int lineCounts(String filePath) {
+        int lines = 0;
+        try(BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)))) {
+            while (r.readLine() != null) {
+                lines++;
+            }
+        } catch (Exception e) {
+            log.error("Can't read file from {}", filePath);
+        }
+        return lines;
     }
 }

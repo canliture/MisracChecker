@@ -1,17 +1,14 @@
 package kr.ac.jbnu.ssel.misrac;
 
+import javafx.util.Pair;
 import kr.ac.jbnu.ssel.castparser.CDTParser;
 import kr.ac.jbnu.ssel.misrac.rulesupport.AbstractMisraCRule;
 import kr.ac.jbnu.ssel.misrac.rulesupport.MiaraCRuleException;
 import kr.ac.jbnu.ssel.misrac.rulesupport.ViolationMessage;
-import kr.ac.jbnu.ssel.misrac.ui.preference.MisraUIdataHandler;
-import kr.ac.jbnu.ssel.misrac.ui.preference.Rule;
 import kr.ac.jbnu.ssel.misrac.util.Files;
 import lombok.extern.log4j.Log4j2;
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
-import org.eclipse.cdt.core.model.ITranslationUnit;
 import org.reflections.Reflections;
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -28,8 +25,6 @@ public class MISRACChecker {
                                      + "-src {被扫描源码目录} \n"
                                      + "-rst {输出结果文件路径}\n";
 
-    private static final String RESULT_NAME_PREFIX = "misra_c_result";
-
     private static final String[] C_SUFFIX = new String[] { ".c", ".C", ".h" };
 
     String srcPath;
@@ -40,6 +35,32 @@ public class MISRACChecker {
     private List<IASTTranslationUnit> astList;
 
     private Set<String> sourceFiles = new TreeSet<>();
+
+    private int fileCounts;
+
+    private Map<String, Pair<Integer, Integer>> suffix2CountAndLines = new HashMap<>();
+
+    private void calStatics() {
+        fileCounts = sourceFiles.size();
+        for (String sourceFile : sourceFiles) {
+            String suffix = sourceFile.substring(sourceFile.lastIndexOf('.')+1);
+            Pair<Integer, Integer> countAndLines = suffix2CountAndLines.get(suffix);
+            if (countAndLines == null) {
+                countAndLines = new Pair<>(0, 0);
+            }
+            int count = countAndLines.getKey() + 1;
+            int lines = countAndLines.getValue() + Files.lineCounts(sourceFile);
+            suffix2CountAndLines.put(suffix, new Pair<>(count, lines));
+        }
+    }
+
+    public int getFileCounts() {
+        return fileCounts;
+    }
+
+    public Map<String, Pair<Integer, Integer>> getSuffix2CountAndLines() {
+        return suffix2CountAndLines;
+    }
 
     /**
      * -src 被扫描源码目录, 必选
@@ -54,6 +75,7 @@ public class MISRACChecker {
         MISRACChecker checker = new MISRACChecker();
         checker.processCommandLine(args);
         Files.listFilesWithExtends(checker.srcPath, C_SUFFIX, checker.sourceFiles);
+        checker.calStatics();
         checker.parse();
 
         List<ViolationMessage> msgList = new ArrayList<>();
