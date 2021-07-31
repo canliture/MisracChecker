@@ -1,5 +1,9 @@
 # Run test as a Standalone tool
-run `test.kr.ac.jbnu.ssel.misrac.rule.testsupport.TestResourceMgr.Main()`
+run `kr.ac.jbnu.ssel.misrac.MISRACChecker#main(String[])`
+- \- src
+   - the source code directory to be scanned.
+- -rst
+   - output result directory
 
 # Original README:
 <a href="README_original.MD">README_original.MD</a>
