@@ -25,7 +25,7 @@ public class MISRACChecker {
                                      + "-src {被扫描源码目录} \n"
                                      + "-rst {输出结果文件路径}\n";
 
-    private static final String[] C_SUFFIX = new String[] { ".c", ".C", ".h" };
+    private static final String[] C_SUFFIX = new String[] { ".c", ".C", ".h", "cpp" };
 
     String srcPath;
     String resultPath;
