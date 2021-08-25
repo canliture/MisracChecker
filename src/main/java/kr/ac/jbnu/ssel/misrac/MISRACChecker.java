@@ -81,7 +81,11 @@ public class MISRACChecker {
         Set<ViolationMessage> msgSet = new HashSet<>();
         List<IASTTranslationUnit> trans = checker.astList;
         for (IASTTranslationUnit unit : trans) {
-            msgSet.addAll(checker.checkTranslation(unit));
+            try {
+                msgSet.addAll(checker.checkTranslation(unit));
+            } catch (Throwable t) {
+                log.error(t.getMessage());
+            }
         }
 
         // internal implementation, not open source.
@@ -126,7 +130,7 @@ public class MISRACChecker {
             IASTTranslationUnit ast = null;
             try {
                 ast = CDTParser.createAST(sourceFile);
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 log.error("Can't create AST from file {}", sourceFile);
                 continue;
             }
