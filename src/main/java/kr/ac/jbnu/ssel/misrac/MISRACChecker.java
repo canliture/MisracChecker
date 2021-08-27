@@ -1,6 +1,6 @@
 package kr.ac.jbnu.ssel.misrac;
 
-import javafx.util.Pair;
+import com.ibm.icu.impl.Pair;
 import kr.ac.jbnu.ssel.castparser.CDTParser;
 import kr.ac.jbnu.ssel.misrac.rulesupport.AbstractMisraCRule;
 import kr.ac.jbnu.ssel.misrac.rulesupport.MiaraCRuleException;
@@ -46,11 +46,11 @@ public class MISRACChecker {
             String suffix = sourceFile.substring(sourceFile.lastIndexOf('.')+1);
             Pair<Integer, Integer> countAndLines = suffix2CountAndLines.get(suffix);
             if (countAndLines == null) {
-                countAndLines = new Pair<>(0, 0);
+                countAndLines = Pair.of(0, 0);
             }
-            int count = countAndLines.getKey() + 1;
-            int lines = countAndLines.getValue() + Files.lineCounts(sourceFile);
-            suffix2CountAndLines.put(suffix, new Pair<>(count, lines));
+            int count = countAndLines.first + 1;
+            int lines = countAndLines.second + Files.lineCounts(sourceFile);
+            suffix2CountAndLines.put(suffix, Pair.of(count, lines));
         }
     }
 
